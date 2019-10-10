@@ -67,10 +67,10 @@
 }
 
 {
-  function Promise(???){
-    ???
-    return ???
-  }
+  // function Promise(???){
+  //   ???
+  //   return ???
+  // }
 
   var promise = new Promise(function(x,y){
       setTimeout(()=>{
