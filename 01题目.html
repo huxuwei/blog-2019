@@ -22,7 +22,79 @@
     <li>防抖</li>
   </ol>
   <script>
-  
+    // 深拷贝
+    {
+      const cloneDeep =  function (source) {
+        let target = {}
+        for (const key in source) {
+          if (typeof source[key] === 'Object') {
+            cloneDeep(source[key])
+          }else{
+            target[key] = source[key]
+          }
+        }
+        return target
+      }
+      ////////
+      var obj = {a: 1, b: 2}
+      var target = cloneDeep(obj)
+      target.a=3
+      console.log('cloneDeep',obj, target)
+      
+    }
+    
+    // 数组去重
+    {
+      const arr = [1,2,4,5,3,4,5]
+      // 1. 使用set
+      console.log('数组去重1.set: ', [... new Set(arr)], arr)
+      // 2. 判断第一次出现位置
+      const arr1 = arr.filter((item, index)=>{
+        return arr.findIndex(ele=>item===ele) === index
+      })
+      console.log('筛选第一次出现位置:', arr1, arr)
+    }
+
+    // 扁平化数组
+    {
+      // 1.flat (会有兼容性问题)
+      const arr = [1,2,3,[4,5,[6,7,[8,9]]]]
+      console.log('flat: ', arr.flat(5), arr)
+      // 2. 使用reduce concat 和递归 
+      const flatDeep =  function (arr) {
+        return arr.reduce((acc,item)=>{
+          return  acc.concat(Array.isArray(item) ? flatDeep(item) :item)
+        },[])
+      }
+      console.log('手写flatDeep', flatDeep(arr), arr)
+    }
+
+    // 函数节流(稀释)
+    {
+      function throttle(fn, await = 500) {
+        let time = +new Date()
+        return function () {
+          const now = +new Date()
+          if( now - time > await){
+            time = now
+            fn.apply(this, arguments)
+          }
+        }
+      }
+    }
+
+    // 函数防抖 (延迟执行)
+    {
+      const debounce = (fn, awit =500) =>{
+        let timer = null
+        return (...args) =>{
+          if(timer)clearInterval(timer)
+          timer = setInterval(()=>{
+            fn.apply(this, args)
+          },await)
+        }
+      }
+    }
   </script>
 </body>
 </html>
